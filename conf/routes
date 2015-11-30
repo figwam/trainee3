@@ -1,0 +1,40 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+GET           /                                      com.tuplejump.playYeoman.Yeoman.index
+
+#open resources
+GET           /trainees/me                               controllers.ApplicationController.trainee
+GET           /offers                               controllers.ApplicationController.offers
+GET           /clazzes                               controllers.ApplicationController.clazzes(p:Int ?= 0, s:Int ?= 1, f ?= "")
+GET           /clazzesCount                          controllers.ApplicationController.clazzesCount
+
+# Secured resources
+GET           /clazzes/trainees/me                   controllers.ApplicationController.clazzesPersonalizedAll(p:Int ?= 0, s:Int ?= 1, f ?= "")
+GET           /trainees/me/registrationsCount        controllers.RegistrationController.countByTrainee
+POST          /trainees/me/registrations             controllers.RegistrationController.create
+DELETE        /trainees/me/registrations/:id         controllers.RegistrationController.delete(id: java.util.UUID)
+PUT           /trainees/me                           controllers.TraineeController.update
+
+#1420066800000 = 01.01.2015 00:00:00 LocalTime, see http://currentmillis.com/
+#7258114800000 = 01.01.2200 00:00:00 So pretty in future. What will happen in year 2200 with this app I actually dont care!
+GET          /trainees/me/clazzes                    controllers.ApplicationController.clazzesPersonalizedMy(p:Int ?= 0, s:Int ?= 1, f ?= "", sf:Long ?= 1420066800000L, ea:Long ?= 7258114800000L)
+
+GET           /signOut                               controllers.ApplicationController.signOut
+POST          /signIn                                controllers.CredentialsAuthController.authenticate
+POST          /signUp                                controllers.SignUpController.signUp
+
+#Map the callouts
+GET           /generate/map                          controllers.Callouts.getStaticGoogleMap
+
+# Dynamic part of the url
+GET           /views/$template<[^/]+>.html           controllers.ApplicationController.view(template)
+GET           /views/me/$template<[^/]+>.html        controllers.ApplicationController.viewRestricted(template)
+
+
+# Map static resources from the /public folder to the /assets URL path
+GET           /assets/*file                          controllers.Assets.at(path="/public", file)
+GET           /webjars/*file                         controllers.WebJarAssets.at(file)
+
+->            /                                      yeoman.Routes

@@ -1,0 +1,53 @@
+@()(implicit request: RequestHeader, messages: Messages)
+
+<hgroup class="mb20">
+    <h1>@Messages("search.result")</h1>
+    <h2 class="lead"><strong class="text-danger">
+        {{clazzes.total}}&nbsp;</strong>@Messages("search.result.amount")<!--<strong class="text-danger">&nbsp;{{clazzes.searchString}}</strong>--></h2>
+
+    <div class="row">
+        <div class="col-md-6">
+            <form name="form" id="search-form" ng-submit="submitSearch()">
+                <div class="input-group">
+                    <input ng-model="searchString" type="text" class="form-control" placeholder="@Messages("search.clazz")" value="{{clazzesSearchString}}">
+                    <span class="input-group-btn">
+                        <button class="btn btn-success" type="submit" value="submitSearch" type="button">@Messages("search.go")</button>
+                    </span>
+                </div><!-- /input-group -->
+            </form>
+        </div>
+    </div><!-- /.row -->
+</hgroup>
+<section id="clazzes">
+    <div class="container">
+        <dir-pagination-controls boundary-links="true" on-page-change="pageChanged(newPageNumber)" template-url="bower_components/angular-utils-pagination/dirPagination.tpl.html"></dir-pagination-controls>
+        <article class="search-result row" dir-paginate="(key, item) in clazzes.items | itemsPerPage: 10" total-items="totalClazzes" current-page="pagination.current">
+            <hr>
+            <div class="col-xs-12 col-sm-12 col-md-3">
+                <img ng-if="item.avatarurl" src="{{item.avatarurl}}"/>
+                <img ng-if="!item.avatarurl" src="@routes.Assets.at("images/logo/Gymix_logo_farbig.png")"/>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-2">
+                <ul class="meta-search">
+                    <li><i class="fa fa-calendar"></i> <span>{{item.startFrom  | date: 'EEE, dd MMM'}}</span></li>
+                    <li><i class="fa fa-clock-o"></i> <span>
+                        {{item.startFrom  | date: 'HH:mm'}}-{{item.endAt | date: 'HH:mm'}}</span></li>
+                    <li ng-if="item.contingent - item.registrations > 0"><i class="fa fa-users"></i> <span>
+                        {{item.contingent - item.registrations}} @Messages("word.of")&nbsp;{{item.contingent}} @Messages("word.free")</span></li>
+                    <li ng-if="item.contingent - item.registrations <= 0"><i class="fa fa-users"></i> <span><strong class="text-danger">@Messages("clazz.booked.out")</strong></span></li>
+                    <li><i class="fa fa-tags"></i> <span>{{item.tags}}</span></li>
+                    <li><i class="fa fa-map-marker"></i> <span>{{item.studio.address.city}}</span></li>
+                </ul>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-7 excerpet">
+                <h3><a href="#" title="">{{item.name}}</a></h3>
+                <ul class="meta-search">
+                    <li><span>{{item.studio.name}}: {{item.studio.address.street}}, {{item.studio.address.zip}} {{item.studio.address.city}}</span></li>
+                </ul>
+                <p>{{item.description}}</p>
+                <a  ui-sref="home.signUp.abo" ng-disabled="item.contingent - item.registrations <= 0" class="btn btn-success">@Messages("clazz.book")</a>
+                    <!--<button class="btn btn-danger">Cancel</button>-->
+            </div>
+        </article>
+    </div>
+</section>

@@ -1,0 +1,59 @@
+@()(implicit request: RequestHeader, messages: Messages)
+
+
+<h5 >@Messages("section.pricing.selected"):&nbsp;
+<span ng-show="formData.aboId=='@Messages("section.pricing.small.id")'">@Messages("section.pricing.small")</span>
+<span ng-show="formData.aboId=='@Messages("section.pricing.medium.id")'">@Messages("section.pricing.medium")</span>
+<span ng-show="formData.aboId=='@Messages("section.pricing.large.id")'">@Messages("section.pricing.large")</span>
+    (<a ui-sref="home.signUp.abo">@Messages("word.change")</a>) </h5>
+
+<fieldset class="signUp-fieldset">
+
+    <div class="help-block text-danger" ng-if="form.email.$dirty" ng-messages="form.email.$error">
+        <div ng-message="required">@Messages("error.required")</div>
+        <div ng-message="trainee.exists">@Messages("trainee.exists")</div>
+    </div>
+    <div class="help-block text-danger" ng-if="form.zip.$dirty" ng-messages="form.zip.$error">
+        <div ng-message="required">@Messages("error.required")</div>
+        <div ng-message="invalid.data">@Messages("invalid.data")</div>
+    </div>
+
+        <!-- Text input-->
+    <div class="form-group row signUp-formGroup">
+        <div class="col-sm-6">
+            <input type="text" checker="scope.checkValidity" name="firstname" ng-model="formData.firstname" placeholder="@Messages("firstname")" class="form-control input-sm" required>
+        </div>
+        <div class="col-sm-6">
+            <input type="text" checker="scope.checkValidity" name="lastname" ng-model="formData.lastname" placeholder="@Messages("lastname")" class="form-control input-sm" required>
+        </div>
+    </div>
+    <div class="form-group row signUp-formGroup">
+        <div class="col-sm-6">
+            <input type="text" checker="scope.checkValidity" name="street" ng-model="formData.street" placeholder="@Messages("street")" class="form-control input-sm" required>
+        </div>
+        <div class="col-sm-2">
+            <input type="text" checker="scope.checkValidity" name="zip" ng-model="formData.zip" placeholder="@Messages("zip")" class="form-control input-sm" ng-pattern="/^\d{4,4}$/" required>
+        </div>
+        <div class="col-sm-4">
+            <input type="text" checker="scope.checkValidity" name="city" ng-model="formData.city" placeholder="@Messages("city")" class="form-control input-sm" required>
+        </div>
+    </div>
+    <div class="form-group row signUp-formGroup">
+        <div class="col-sm-6">
+            <input type="email" checker="scope.checkValidity" name="email" ng-model="formData.email" placeholder="@Messages("email")" class="form-control input-sm" required>
+        </div>
+        <div class="col-sm-6">
+            <input type="password" checker="scope.checkValidity" name="password" ng-model="formData.password" placeholder="@Messages("password")" class="form-control input-sm" required>
+        </div>
+    </div>
+
+
+    <div class="form-group row">
+        <div class="col-lg-12">
+            <div class="form-group">
+                <!--ng-disabled="form.$invalid" -->
+                <button id="submit" type="submit" value="submit" class="btn btn-lg btn-success btn-block">@Messages("sign.up")</button>
+            </div>
+        </div>
+    </div>
+</fieldset>

@@ -1,0 +1,46 @@
+@()(implicit messages: Messages)
+
+<div class="row">
+    <div class="col-lg-12">
+        <rd-widget>
+            <rd-widget-header icon="fa-star" title="@Messages("my.subscription")">
+            </rd-widget-header>
+            <rd-widget-body classes="small no-padding">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>@Messages("word.name")</th>
+                                <th>@Messages("word.price")</th>
+                                <th>@Messages("word.from")</th>
+                                <th>@Messages("word.till")</th>
+                                <th>@Messages("word.status")</th>
+                                <th ng-show="trainee.subscription.deletedOn">@Messages("my.subscription.valid.till")</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td ng-show="trainee.subscription.offer.id=='@Messages("section.pricing.small.id")'">@Messages("section.pricing.small")</td>
+                                <td ng-show="trainee.subscription.offer.id=='@Messages("section.pricing.medium.id")'">@Messages("section.pricing.medium")</td>
+                                <td ng-show="trainee.subscription.offer.id=='@Messages("section.pricing.large.id")'">@Messages("section.pricing.large")</td>
+                                <td>CHF {{trainee.subscription.offer.price}}</td>
+                                <td>{{trainee.subscription.period.start | date: 'dd.MM.yyyy'}}</td>
+                                <td>{{trainee.subscription.period.end | date: 'dd.MM.yyyy'}}</td>
+                                <td ng-show="!trainee.subscription.canceledOn">@Messages("word.active")</td>
+                                <td ng-show="trainee.subscription.canceledOn">@Messages("my.subscription.cancelled")</td>
+                                <td ng-show="trainee.subscription.deletedOn">{{trainee.subscription.deletedOn | date: 'dd.MM.yyyy'}}</td>
+                                <td>
+                                    <a ng-show="!trainee.subscription.canceledOn" ng-click="delete()" class="btn btn-danger">@Messages("my.subscription.cancel")</a>
+                                    <!--<a ng-show="trainee.subscription.canceledOn" href="#" class="btn btn-success">@@Messages("word.activate")</a>-->
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </rd-widget-body>
+        </rd-widget>
+    </div>
+</div>
+
+

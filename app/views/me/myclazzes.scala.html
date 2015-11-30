@@ -1,0 +1,202 @@
+@()(implicit messages: Messages)
+
+<div class="row" ng-controller="ClazzMeCtrl">
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="col-md-12">
+                <h2 ng-if="myClazzes.total > 0"class="lead"><strong class="text-danger">
+                    {{myClazzes.total}}&nbsp;</strong>@Messages("my.clazzes.current")</h2>
+                <h2 ng-if="myClazzes.total <= 0"class="lead">@Messages("my.clazzes.no.current")</h2>
+            </div>
+        </div><!-- /.row -->
+
+
+        <article class="search-result row" dir-paginate="(key, item) in myClazzes.items | itemsPerPage: 10" total-items="myTotalClazzes" current-page="pagination.current">
+            <hr>
+            <div class="col-xs-12 col-sm-12 col-md-3">
+                <a href="#" title="{{item.name}}" class="thumbnail">
+                    <img ng-if="item.avatarurl" src="{{item.avatarurl}}"/>
+                    <img ng-if="!item.avatarurl" src="@routes.Assets.at("images/logo/Gymix_logo_farbig.png")"/>
+                </a>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-2">
+                <ul class="meta-search">
+                    <li><i class="fa fa-calendar"></i> <span>{{item.startFrom  | date: 'EEE, dd MMM'}}</span></li>
+                    <li><i class="fa fa-clock-o"></i> <span>
+                        {{item.startFrom  | date: 'HH:mm'}}-{{item.endAt | date: 'HH:mm'}}</span></li>
+                    <li ng-if="item.contingent - item.registrations > 0"><i class="fa fa-users"></i> <span>
+                        {{item.contingent - item.registrations}} von {{item.contingent}} frei</span></li>
+                    <li ng-if="item.contingent - item.registrations <= 0"><i class="fa fa-users"></i> <span><strong class="text-danger">@Messages("clazz.booked.out")</strong></span></li>
+                </ul>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-7 excerpet">
+                <h3><a href="#" title="">{{item.name}}</a></h3>
+                <p>{{item.description}}</p>
+
+                <button ng-if="!item.idRegistration" ng-disabled="item.contingent - item.registrations <= 0" class="btn btn-success" ng-click="book(item.id)">@Messages("clazz.book")</button>
+                <button ng-if="item.idRegistration" class="btn btn-danger" ng-click="bookDelete(item.idRegistration)">@Messages("clazz.cancel")</button>
+
+            </div>
+        </article>
+        <dir-pagination-controls boundary-links="true" on-page-change="myClazzesPageChanged(newPageNumber,trainee.id)" template-url="bower_components/angular-utils-pagination/dirPagination.tpl.html"></dir-pagination-controls>
+    </div>
+
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="col-md-12">
+                <h2 ng-if="myClazzesHistory.total > 0"class="lead"><strong class="text-danger">
+                    {{myClazzesHistory.total}}&nbsp;</strong>@Messages("my.clazzes.history")</h2>
+                <h2 ng-if="myClazzesHistory.total <= 0"class="lead">@Messages("my.clazzes.no.history")</h2>
+            </div>
+        </div><!-- /.row -->
+
+
+        <article class="search-result row" dir-paginate="(key, item) in myClazzesHistory.items | itemsPerPage: 10" total-items="myTotalClazzesHistory" current-page="pagination.current">
+            <hr>
+            <div class="col-xs-12 col-sm-12 col-md-3">
+                <a href="#" title="{{item.name}}" class="thumbnail"><img src="{{item.avatarurl}}" alt="" /></a>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-2">
+                <ul class="meta-search">
+                    <li><i class="fa fa-calendar"></i> <span>{{item.startFrom  | date: 'EEE, dd MMM'}}</span></li>
+                    <li><i class="fa fa-clock-o"></i> <span>
+                        {{item.startFrom  | date: 'HH:mm'}}-{{item.endAt | date: 'HH:mm'}}</span></li>
+                   </ul>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-7 excerpet">
+                <h3><a href="#" title="">{{item.name}}</a></h3>
+                <p>{{item.description}}</p>
+            </div>
+        </article>
+        <dir-pagination-controls boundary-links="true" on-page-change="myClazzesHistoryPageChanged(newPageNumber,trainee.id)" template-url="bower_components/angular-utils-pagination/dirPagination.tpl.html"></dir-pagination-controls>
+    </div>
+</div>
+
+<!--
+<div class="row">
+    <div class="col-lg-3 col-md-6 col-xs-12">
+        <rd-widget>
+            <rd-widget-body>
+                <div class="widget-icon green pull-left">
+                    <i class="fa fa-users"></i>
+                </div>
+                <div class="title">160</div>
+                <div class="comment">Sportkurse werden angeboten</div>
+            </rd-widget-body>
+        </rd-widget>
+    </div>
+    <div class="col-lg-3 col-md-6 col-xs-12">
+        <rd-widget>
+            <rd-widget-body>
+                <div class="widget-icon blue pull-left">
+                    <i class="fa fa-tasks"></i>
+                </div>
+                <div class="title">Ihr Nächster Sportkurs 20.09.2016</div>
+                <div class="comment">17:00 - 17:30, bei Leone</div>
+            </rd-widget-body>
+        </rd-widget>
+    </div>
+    <div class="col-lg-3 col-md-6 col-xs-12">
+        <rd-widget>
+            <rd-widget-body>
+                <div class="widget-icon orange pull-left">
+                    <i class="fa fa-sitemap"></i>
+                </div>
+                <div class="title">225</div>
+                <div class="comment">Documents</div>
+            </rd-widget-body>
+        </rd-widget>
+    </div>
+    <div class="col-lg-3 col-md-6 col-xs-12">
+        <rd-widget>
+            <rd-widget-body>
+                <div class="widget-icon red pull-left">
+                    <i class="fa fa-support"></i>
+                </div>
+                <div class="title">62</div>
+                <div class="comment">Tickets</div>
+            </rd-widget-body>
+        </rd-widget>
+    </div>
+</div>
+    -->
+<!--
+<div class="row">
+    <div class="col-lg-6">
+        <rd-widget>
+            <rd-widget-header icon="fa-tasks" title="Servers">
+                <a href="#">Manage</a>
+            </rd-widget-header>
+            <rd-widget-body classes="medium no-padding">
+                <div class="table-responsive">
+                    <table class="table">
+                        <tbody>
+                            <tr><td>RDVMPC001</td><td>238.103.133.37</td><td><span class="text-success"><i class="fa fa-check"></i></span></td></tr>
+                            <tr><td>RDVMPC002</td><td>68.66.63.170</td><td><span class="text-success"><i class="fa fa-check"></i></span></td></tr>
+                            <tr><td>RDVMPC003</td><td>76.117.212.33</td><td><span tooltip="Server Down!" class="text-danger"><i class="fa fa-warning"></i></span></td></tr>
+                            <tr><td>RDPHPC001</td><td>91.88.224.5</td><td><span class="text-success"><i class="fa fa-check"></i></span></td></tr>
+                            <tr><td>RDESX001</td><td>197.188.15.93</td><td><span class="text-success"><i class="fa fa-check"></i></span></td></tr>
+                            <tr><td>RDESX002</td><td>168.85.154.251</td><td><span class="text-success"><i class="fa fa-check"></i></span></td></tr>
+                            <tr><td>RDESX003</td><td>209.25.191.61</td><td><span tooltip="Server Down!" class="text-danger"><i class="fa fa-warning"></i></span></td></tr>
+                            <tr><td>RDESX004</td><td>252.37.192.235</td><td><span class="text-success"><i class="fa fa-check"></i></span></td></tr>
+                            <tr><td>RDTerminal01</td><td>139.71.18.207</td><td><span class="text-success"><i class="fa fa-check"></i></span></td></tr>
+                            <tr><td>RDTerminal02</td><td>136.80.122.212</td><td><span tooltip="Could not connect!" class="text-warning"><i class="fa fa-flash"></i></span></td></tr>
+                            <tr><td>RDDomainCont01</td><td>196.80.245.33</td><td><span class="text-success"><i class="fa fa-check"></i></span></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </rd-widget-body>
+        </rd-widget>
+    </div>
+    <div class="col-lg-6">
+        <rd-widget>
+            <rd-widget-header icon="fa-users" title="Users">
+                <input type="text" placeholder="Search" class="form-control input-sm" />
+            </rd-widget-header>
+            <rd-widget-body classes="medium no-padding">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr><th class="text-center">ID</th><th>Username</th><th>Role</th><th>Account</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td class="text-center">1</td><td>Joe Bloggs</td><td>Super Admin</td><td>AZ23045</td></tr>
+                            <tr><td class="text-center">2</td><td>Timothy Hernandez</td><td>Admin</td><td>AU24783</td></tr>
+                            <tr><td class="text-center">3</td><td>Joe Bickham</td><td>User</td><td>AM23781</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </rd-widget-body>
+            <rd-widget>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-6">
+        <rd-widget>
+            <rd-widget-header icon="fa-plus" title="Extras">
+                <button class="btn btn-sm btn-info">Button</button>
+            </rd-widget-header>
+            <rd-widget-body>
+                <div class="message">
+					This is a standard message which will also work the ".no-padding" class, I can also <span class="error">be an error message!</span>
+				</div>
+                <hr />
+                <div class="message">
+                    <a href="http://angular-ui.github.io/bootstrap/" target="_blank">UI Bootstrap</a> is included, so you can use <a href="#" tooltip="I'm a tooltip!">tooltips</a> and all of the other native Bootstrap JS components!
+                </div>
+            </rd-widget-body>
+        </rd-widget>
+    </div>
+    <div class="col-lg-6">
+        <rd-widget>
+            <rd-widget-header icon="fa-cog fa-spin" title="Loading Directive">
+                <a href="http://tobiasahlin.com/spinkit/" target="_blank">SpinKit</a>
+            </rd-widget-header>
+            <rd-widget-body>
+                <rd-loading></rd-loading>
+            </rd-widget-body>
+        </rd-widget>
+    </div>
+</div>
+-->

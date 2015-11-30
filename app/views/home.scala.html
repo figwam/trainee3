@@ -1,0 +1,62 @@
+@()(implicit messages: Messages)
+
+@main {
+    <section id="pricing">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 wow bounceIn">
+                    <h2 class="text-uppercase">@Messages("section.pricing.title")</h2>
+                    <h3 ng-if="fromRegistrationButton" class="text-info">@Messages("section.pricing.signup.title")</h3>
+                </div>
+                <div class="col-md-4 wow fadeIn" data-wow-delay="0.6s">
+                    <div class="pricing">
+                        <div class="pricing-title text-uppercase">
+                            <h4>@Messages("section.pricing.small")</h4>
+                            <p>@Messages("section.pricing.small.price")</p>
+                            <small class="text-lowercase">@Messages("word.monthly")</small>
+                        </div>
+                        <ul>
+                            <li><b>4</b> @Messages("section.pricing.basic.1")</li>
+                                <!--<li><b>2</b> Messages("section.pricing.basic.2")</li>-->
+                            <li>@Messages("section.pricing.basic.3")</li>
+                            <li>@Messages("section.pricing.basic.4")</li>
+                        </ul>
+                        <button class="btn btn-primary text-uppercase" ng-click="submitOfferRedirect('@Messages("section.pricing.small")','@Messages("section.pricing.small.id")', true)" type="submit" >@Messages("section.pricing.signup")</button>
+                    </div>
+                </div>
+                <div class="col-md-4 wow fadeIn" data-wow-delay="0.6s">
+                    <div class="pricing active">
+                        <div class="pricing-title text-uppercase">
+                            <h4>@Messages("section.pricing.medium")</h4>
+                            <p>@Messages("section.pricing.medium.price")</p>
+                            <small class="text-lowercase">@Messages("word.monthly")</small>
+                        </div>
+                        <ul>
+                            <li><b>6</b> @Messages("section.pricing.basic.1")</li>
+                                <!--<li><b>4</b> Messages("section.pricing.basic.2")</li>-->
+                            <li>@Messages("section.pricing.basic.3")</li>
+                            <li>@Messages("section.pricing.basic.4")</li>
+                        </ul>
+                        <button class="btn btn-primary text-uppercase" ng-click="submitOfferRedirect('@Messages("section.pricing.medium")','@Messages("section.pricing.medium.id")', true)">@Messages("section.pricing.signup")</button>
+                    </div>
+                </div>
+                <div class="col-md-4 wow fadeIn" data-wow-delay="0.6s">
+                    <div class="pricing">
+                        <div class="pricing-title text-uppercase">
+                            <h4>@Messages("section.pricing.large")</h4>
+                            <p>@Messages("section.pricing.large.price")</p>
+                            <small class="text-lowercase">@Messages("word.monthly")</small>
+                        </div>
+                        <ul>
+                            <li><b>8</b> @Messages("section.pricing.basic.1")</li>
+                                <!--<li><b>6</b> Messages("section.pricing.basic.2")</li>-->
+                            <li>@Messages("section.pricing.basic.3")</li>
+                            <li>@Messages("section.pricing.basic.4")</li>
+                        </ul>
+                        <button class="btn btn-primary text-uppercase" ng-click="submitOfferRedirect('@Messages("section.pricing.large")','@Messages("section.pricing.large.id")', true)">@Messages("section.pricing.signup")</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}

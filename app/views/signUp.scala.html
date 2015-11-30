@@ -1,0 +1,52 @@
+@()(implicit request: RequestHeader, messages: Messages)
+
+<section id="signUp">
+    <span us-spinner="{radius:30, width:8, length: 20}"></span>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2">
+
+                <div id="form-container">
+
+                    <div class="page-header text-center">
+                        <h2>Bei Gymix registrieren</h2>
+
+                            <!-- the links to our nested states using relative paths -->
+                            <!-- add the active class if the state matches our ui-sref -->
+                        <div id="status-buttons" class="text-center">
+                            <a ui-sref-active="active" ui-sref=".abo"><span>1</span>@Messages("word.abo")</a>
+                            <a ui-sref-active="active" ui-sref=".profile"><span>2</span>@Messages("word.profile")</a>
+                            <!--<a ui-sref-active="active" ui-sref=".payment"><span>3</span> Zahlung</a>-->
+                        </div>
+                    </div>
+
+                        <!-- use ng-submit to catch the form submission and use our Angular function -->
+                    <form name="form" id="signup-form" ng-submit="submit()">
+                            <!-- our nested state views will be injected here -->
+                        <div id="form-views" ui-view="signUp"></div>
+                    </form>
+
+                </div>
+
+                    <!-- show our formData as it is being typed -->
+
+
+                <div>
+                    <p class="already-member">@Messages("already.a.member") <a ui-sref="home.signIn">@Messages("sign.in.now")</a></p>
+                </div>
+                <pre>
+                    {{ formData }}
+
+                    {{ form.firstname.$dirty }}
+                    {{ form.lastname.$dirty }}
+                    {{ form.email.$dirty }}
+                    {{ form.email.$touched }}
+                    {{ form.email.$valid }}
+                </pre>
+
+
+
+            </div>
+        </div>
+    </div>
+</section>
