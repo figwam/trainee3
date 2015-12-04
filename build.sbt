@@ -27,9 +27,6 @@ libraryDependencies ++= Seq(
   "org.scalatest" % "scalatest_2.11" % "2.2.4" % "test",
   "org.webjars.bower" % "font-awsome" % "4.4.0",
   specs2 % Test,
-  "com.typesafe.play" %% "play-slick" % "1.0.1",
-  "com.typesafe.play" %% "play-slick-evolutions" % "1.0.1",
-  "org.postgresql" % "postgresql" % "9.4-1202-jdbc42",
   cache,
   evolutions,
   filters
