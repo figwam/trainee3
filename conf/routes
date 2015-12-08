@@ -10,9 +10,12 @@ GET           /addresses/:id                        controllers.AddressControlle
 PUT           /addresses/:id                        controllers.AddressController.update(id: java.util.UUID)
 DELETE        /addresses/:id                        controllers.AddressController.delete(id: java.util.UUID)
 
+
+
 #open resources
-GET           /trainees/me                               controllers.ApplicationController.trainee
-GET           /offers                               controllers.ApplicationController.offers
+GET           /user                               controllers.UserController.user
+GET           /offers                               controllers.OthersController.offers
+GET           /enums                               controllers.OthersController.enums
 GET           /clazzes                               controllers.ApplicationController.clazzes(p:Int ?= 0, s:Int ?= 1, f ?= "")
 GET           /clazzesCount                          controllers.ApplicationController.clazzesCount
 
@@ -21,13 +24,14 @@ GET           /clazzes/trainees/me                   controllers.ApplicationCont
 GET           /trainees/me/registrationsCount        controllers.RegistrationController.countByTrainee
 POST          /trainees/me/registrations             controllers.RegistrationController.create
 DELETE        /trainees/me/registrations/:id         controllers.RegistrationController.delete(id: java.util.UUID)
+GET           /trainees/me                           controllers.TraineeController.retrieve
 PUT           /trainees/me                           controllers.TraineeController.update
 
 #1420066800000 = 01.01.2015 00:00:00 LocalTime, see http://currentmillis.com/
 #7258114800000 = 01.01.2200 00:00:00 So pretty in future. What will happen in year 2200 with this app I actually dont care!
 GET          /trainees/me/clazzes                    controllers.ApplicationController.clazzesPersonalizedMy(p:Int ?= 0, s:Int ?= 1, f ?= "", sf:Long ?= 1420066800000L, ea:Long ?= 7258114800000L)
 
-GET           /signOut                               controllers.ApplicationController.signOut
+GET           /signOut                               controllers.UserController.signOut
 POST          /signIn                                controllers.CredentialsAuthController.authenticate
 POST          /signUp                                controllers.SignUpController.signUp
 

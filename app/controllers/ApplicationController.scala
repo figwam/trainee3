@@ -31,65 +31,13 @@ import scala.concurrent.{Await, Future}
 @Singleton
 class ApplicationController @Inject()(
                                        val messagesApi: MessagesApi,
-                                       val env: Environment[Trainee, JWTAuthenticator],
+                                       val env: Environment[User, JWTAuthenticator],
                                        socialProviderRegistry: SocialProviderRegistry,
                                        clazzDAO: ClazzDAO,
                                        traineeDAO: TraineeDAO,
                                        offerDAO: OfferDAO,
                                        subscriptionDAO: SubscriptionDAO)
-  extends Silhouette[Trainee, JWTAuthenticator] {
-
-  def offers = UserAwareAction.async { implicit request =>
-    lazy val cacheExpire = Play.application().configuration().getString("cache.expire.get.offers").toInt
-    val offers:List[Offer] = Cache.getAs[List[Offer]]("offers").getOrElse{
-      val offers:List[Offer] = Await.result(offerDAO.list(), 5.seconds)
-      Cache.set("offers", offers, cacheExpire.seconds)
-      offers
-    }
-    Future.successful(Ok(Json.toJson(offers)))
-  }
-
-  /**
-   * Returns the trainee.
-   *
-   * @return The result to display.
-   */
-  def trainee = SecuredAction.async { implicit request =>
-    Future.successful(Ok(Json.toJson(request.identity)))
-  }
-
-    /*
-    try {
-      (request.body \ "idTrainee").asOpt[Long].map { idTrainee =>
-        val future = traineeDAO.book(Registration(None, UUID.randomUUID(), idTrainee, idClazz))
-        future.onSuccess { case a => Logger.debug(s"Registration created: $a"); Future.successful(Ok)}
-        future.onFailure {
-          case t: PSQLException => {
-            if (t.getMessage.contains("duplicate key value violates unique constraint")) {
-              Logger.info("Registration already exists")
-              Future.successful(BadRequest("registration already exists"))
-            }
-            else {
-              Logger.error("Something bad happened", t)
-              Future.successful(InternalServerError("Something bad happened"))
-            }
-          }
-          case t: Throwable => {
-            Logger.error(t.getMessage,t)
-            Future.successful(InternalServerError("Something bad happened"))
-          }
-          case _ => Future.successful(BadRequest("Missing parameter [idTrainee]"))
-        }
-      }.getOrElse {
-        Future.successful(BadRequest("Missing parameter [idTrainee]"))
-      }
-    } catch {
-      case t: Throwable =>
-        Logger.error(t.getMessage,t)
-        Future.successful(InternalServerError("Something bad happened"))
-    }
-    */
-
+  extends Silhouette[User, JWTAuthenticator] {
 
 
   def clazzes(page: Int, orderBy: Int, filter: String) = UserAwareAction.async { implicit request =>

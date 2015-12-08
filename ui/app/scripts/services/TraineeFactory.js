@@ -8,7 +8,7 @@
 app.factory('TraineeFactory', function($http) {
   return {
     get: function() {
-      return $http.get('/trainees/me');
+      return $http.get('/user');
     }
   };
 });
