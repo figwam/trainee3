@@ -4,28 +4,38 @@
 
 GET           /                                      com.tuplejump.playYeoman.Yeoman.index
 
-#address
-POST          /addresses                            controllers.AddressController.create
-GET           /addresses/:id                        controllers.AddressController.retrieve(id: java.util.UUID)
-PUT           /addresses/:id                        controllers.AddressController.update(id: java.util.UUID)
-DELETE        /addresses/:id                        controllers.AddressController.delete(id: java.util.UUID)
+# address
+#POST          /addresses                            controllers.AddressController.create
+#GET           /addresses/:id                        controllers.AddressController.retrieve(id: java.util.UUID)
+#PUT           /addresses/:id                        controllers.AddressController.update(id: java.util.UUID)
+#DELETE        /addresses/:id                        controllers.AddressController.delete(id: java.util.UUID)
 
 
 
-#open resources
+# open resources
 GET           /user                               controllers.UserController.user
 GET           /offers                               controllers.OthersController.offers
 GET           /enums                               controllers.OthersController.enums
 GET           /clazzes                               controllers.ApplicationController.clazzes(p:Int ?= 0, s:Int ?= 1, f ?= "")
 GET           /clazzesCount                          controllers.ApplicationController.clazzesCount
 
-# Secured resources
+# clazzes
 GET           /clazzes/trainees/me                   controllers.ApplicationController.clazzesPersonalizedAll(p:Int ?= 0, s:Int ?= 1, f ?= "")
+
+# trainee registrations
 GET           /trainees/me/registrationsCount        controllers.RegistrationController.countByTrainee
 POST          /trainees/me/registrations             controllers.RegistrationController.create
 DELETE        /trainees/me/registrations/:id         controllers.RegistrationController.delete(id: java.util.UUID)
+
+# trainee address
+GET           /trainees/me/addresses/:id                        controllers.AddressController.retrieveByOwner(id: java.util.UUID)
+PUT           /trainees/me/addresses/:id                        controllers.AddressController.updateByOwner(id: java.util.UUID)
+
+
+# trainee
 GET           /trainees/me                           controllers.TraineeController.retrieve
 PUT           /trainees/me                           controllers.TraineeController.update
+DELETE        /trainees/me                           controllers.TraineeController.delete
 
 #1420066800000 = 01.01.2015 00:00:00 LocalTime, see http://currentmillis.com/
 #7258114800000 = 01.01.2200 00:00:00 So pretty in future. What will happen in year 2200 with this app I actually dont care!
@@ -34,6 +44,7 @@ GET          /trainees/me/clazzes                    controllers.ApplicationCont
 GET           /signOut                               controllers.UserController.signOut
 POST          /signIn                                controllers.CredentialsAuthController.authenticate
 POST          /signUp                                controllers.SignUpController.signUp
+GET          /signUp/confirm/:token                         controllers.SignUpController.signUpConfirm(token: String)
 
 #Map the callouts
 GET           /generate/map                          controllers.Callouts.getStaticGoogleMap

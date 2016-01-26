@@ -34,8 +34,6 @@ class ApplicationController @Inject()(
                                        val env: Environment[User, JWTAuthenticator],
                                        socialProviderRegistry: SocialProviderRegistry,
                                        clazzDAO: ClazzDAO,
-                                       traineeDAO: TraineeDAO,
-                                       offerDAO: OfferDAO,
                                        subscriptionDAO: SubscriptionDAO)
   extends Silhouette[User, JWTAuthenticator] {
 
@@ -79,14 +77,6 @@ class ApplicationController @Inject()(
         Logger.error("Problem found in clazz list process")
         InternalServerError(ex.getMessage)
     }
-  }
-
-  /**
-   * Manages the sign out action.
-   */
-  def signOut = SecuredAction.async { implicit request =>
-    env.eventBus.publish(LogoutEvent(request.identity, request, request2Messages))
-    env.authenticatorService.discard(request.authenticator, Ok)
   }
 
   /**
