@@ -103,6 +103,7 @@ error.required=Bitte füllen Sie alle Felder richtig aus
 error.email=Bitte valide E-Mail Adresse eingeben
 error.pattern=Ungültige Eingabe
 password.not.match=Bitte geben Sie zwei mal dasselbe Passwort ein
+password.incorrect=Aktuelles passwort inkorrekt
 invalid.credentials=Login fehlgeschlagen: E-Mail und Passwort Kombination ist falsch
 trainee.exists=Benutzer mit dieser E-Mail Adresse ist bereits registriert
 invalid.data=Bitte überprüfen sie die Eingabe Ihrer Daten

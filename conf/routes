@@ -10,6 +10,9 @@ GET           /                                      com.tuplejump.playYeoman.Ye
 #PUT           /addresses/:id                        controllers.AddressController.update(id: java.util.UUID)
 #DELETE        /addresses/:id                        controllers.AddressController.delete(id: java.util.UUID)
 
+# address
+GET           /trainees/me/addresses/:id                        controllers.AddressController.retrieveByOwner(id: java.util.UUID)
+PUT           /trainees/me/addresses/:id                        controllers.AddressController.updateByOwner(id: java.util.UUID)
 
 
 # open resources
@@ -27,9 +30,6 @@ GET           /trainees/me/registrationsCount        controllers.RegistrationCon
 POST          /trainees/me/registrations             controllers.RegistrationController.create
 DELETE        /trainees/me/registrations/:id         controllers.RegistrationController.delete(id: java.util.UUID)
 
-# trainee address
-GET           /trainees/me/addresses/:id                        controllers.AddressController.retrieveByOwner(id: java.util.UUID)
-PUT           /trainees/me/addresses/:id                        controllers.AddressController.updateByOwner(id: java.util.UUID)
 
 
 # trainee
@@ -41,10 +41,14 @@ DELETE        /trainees/me                           controllers.TraineeControll
 #7258114800000 = 01.01.2200 00:00:00 So pretty in future. What will happen in year 2200 with this app I actually dont care!
 GET          /trainees/me/clazzes                    controllers.ApplicationController.clazzesPersonalizedMy(p:Int ?= 0, s:Int ?= 1, f ?= "", sf:Long ?= 1420066800000L, ea:Long ?= 7258114800000L)
 
+# Authentication
 GET           /signOut                               controllers.UserController.signOut
 POST          /signIn                                controllers.CredentialsAuthController.authenticate
 POST          /signUp                                controllers.SignUpController.signUp
-GET          /signUp/confirm/:token                         controllers.SignUpController.signUpConfirm(token: String)
+GET           /signUp/confirm/:token                 controllers.SignUpController.signUpConfirm(token: String)
+POST	      /password/reset/:token	                 controllers.SignUpController.resetPassword(token: String)
+POST	      /password/reset		                 controllers.SignUpController.forgotPassword
+POST	      /password/change				         controllers.SignUpController.changePassword
 
 #Map the callouts
 GET           /generate/map                          controllers.Callouts.getStaticGoogleMap

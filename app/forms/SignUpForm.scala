@@ -3,9 +3,9 @@ package forms
 //import play.api.data.Form
 //import play.api.data.Forms._
 //import play.api.data._
-import play.api.libs.json._
 import play.api.libs.functional.syntax._
-import Reads._
+import play.api.libs.json.Reads._
+import play.api.libs.json._
 /**
  * The form which handles the sign up process.
  */
@@ -65,6 +65,6 @@ object SignUpForm {
       (__ \ 'city).read[String](minLength[String](1)) and
       (__ \ 'zip).read[String](verifying[String](_.matches("\\d{4,4}"))) and
       (__ \ 'state).read[String]
-    )(SignUpForm.Data.apply _)
+    )(Data.apply _)
   }
 }
