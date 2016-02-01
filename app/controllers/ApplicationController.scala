@@ -33,13 +33,13 @@ class ApplicationController @Inject()(
                                        val messagesApi: MessagesApi,
                                        val env: Environment[User, JWTAuthenticator],
                                        socialProviderRegistry: SocialProviderRegistry,
-                                       clazzDAO: ClazzDAO,
+                                       cService: ClazzService,
                                        subscriptionDAO: SubscriptionDAO)
   extends Silhouette[User, JWTAuthenticator] {
 
 
   def clazzes(page: Int, orderBy: Int, filter: String) = UserAwareAction.async { implicit request =>
-    clazzDAO.list(page, 10, orderBy, "%" + filter + "%").flatMap { pageClazzes =>
+    cService.list(page, 10, orderBy, "%" + filter + "%").flatMap { pageClazzes =>
       Future.successful(Ok(Json.toJson(pageClazzes)))
     }.recover {
       case ex: TimeoutException =>
@@ -49,14 +49,14 @@ class ApplicationController @Inject()(
   }
 
   def clazzesCount = UserAwareAction.async { implicit request =>
-    clazzDAO.count.flatMap{ count =>
+    cService.count.flatMap{ count =>
       Future.successful(Ok(Json.toJson(count)))
     }
   }
 
 
   def clazzesPersonalizedAll(page: Int, orderBy: Int, filter: String) = SecuredAction.async { implicit request =>
-    clazzDAO.listPersonalizedAll(page, 10, orderBy, "%" + filter + "%", request.identity.id.getOrElse(UUID.randomUUID())).flatMap { pageClazzes =>
+    cService.listPersonalizedAll(page, 10, orderBy, "%" + filter + "%", request.identity.id.getOrElse(UUID.randomUUID())).flatMap { pageClazzes =>
       Future.successful(Ok(Json.toJson(pageClazzes)))
     }.recover {
       case ex: TimeoutException =>
@@ -70,7 +70,7 @@ class ApplicationController @Inject()(
   def clazzesPersonalizedMy(page: Int, orderBy: Int, filter: String, startFrom: Long, endAt:Long) = SecuredAction.async { implicit request =>
     val d = new GregorianCalendar()
     d.setTimeInMillis(startFrom)
-    clazzDAO.listPersonalizedMy(page, 10, orderBy, "%" + filter + "%", request.identity.id.getOrElse(UUID.randomUUID()), new Timestamp(startFrom), new Timestamp(endAt)).flatMap { pageClazzes =>
+    cService.listPersonalizedMy(page, 10, orderBy, "%" + filter + "%", request.identity.id.getOrElse(UUID.randomUUID()), new Timestamp(startFrom), new Timestamp(endAt)).flatMap { pageClazzes =>
       Future.successful(Ok(Json.toJson(pageClazzes)))
     }.recover {
       case ex: TimeoutException =>
@@ -80,7 +80,7 @@ class ApplicationController @Inject()(
   }
 
   /**
-   * Provides the desired template.
+     * Provides the desired template.
    *
    * @param template The template to provide.
    * @return The template.
