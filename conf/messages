@@ -2,9 +2,12 @@
 
 brand=Gymix
 welcome=Willkommen to Gymix
-welcome.title=Sportabo so flexibel wie noch nie
-welcome.subtext.1=Das flexibelste und einfachste Sportabonnement in der Region Bern.
-welcome.subtext.2=Entscheiden Sie selbst wann, wohin und welchen Sport Sie besuchen möchten
+#welcome.title=Sportabo so flexibel wie noch nie
+#welcome.subtext.1=Das flexibelste und einfachste Sportabonnement in der Region Bern.
+#welcome.subtext.2=Entscheiden Sie selbst wann, wohin und welchen Sport Sie besuchen möchten
+welcome.title=Lorem ipsum dolor sit amet
+welcome.subtext.1=Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
+welcome.subtext.2=At vero eos et accusam et justo duo dolores et ea rebum.
 menu.gymix=Was ist Gymix
 menu.advantages=Ihre Vorteile
 menu.pricing=Preise

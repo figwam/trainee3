@@ -33,30 +33,14 @@ class ApplicationController @Inject()(
                                        val messagesApi: MessagesApi,
                                        val env: Environment[User, JWTAuthenticator],
                                        socialProviderRegistry: SocialProviderRegistry,
-                                       cService: ClazzService,
-                                       subscriptionDAO: SubscriptionDAO)
+                                       cService: ClazzService)
   extends Silhouette[User, JWTAuthenticator] {
 
 
-  def clazzes(page: Int, orderBy: Int, filter: String) = UserAwareAction.async { implicit request =>
-    cService.list(page, 10, orderBy, "%" + filter + "%").flatMap { pageClazzes =>
-      Future.successful(Ok(Json.toJson(pageClazzes)))
-    }.recover {
-      case ex: TimeoutException =>
-        Logger.error("Problem found in clazz list process")
-        InternalServerError(ex.getMessage)
-    }
-  }
-
-  def clazzesCount = UserAwareAction.async { implicit request =>
-    cService.count.flatMap{ count =>
-      Future.successful(Ok(Json.toJson(count)))
-    }
-  }
 
 
   def clazzesPersonalizedAll(page: Int, orderBy: Int, filter: String) = SecuredAction.async { implicit request =>
-    cService.listPersonalizedAll(page, 10, orderBy, "%" + filter + "%", request.identity.id.getOrElse(UUID.randomUUID())).flatMap { pageClazzes =>
+    cService.listPersonalizedAll(page, 10, orderBy, "%" + filter + "%", request.identity.id.get).flatMap { pageClazzes =>
       Future.successful(Ok(Json.toJson(pageClazzes)))
     }.recover {
       case ex: TimeoutException =>
@@ -70,7 +54,7 @@ class ApplicationController @Inject()(
   def clazzesPersonalizedMy(page: Int, orderBy: Int, filter: String, startFrom: Long, endAt:Long) = SecuredAction.async { implicit request =>
     val d = new GregorianCalendar()
     d.setTimeInMillis(startFrom)
-    cService.listPersonalizedMy(page, 10, orderBy, "%" + filter + "%", request.identity.id.getOrElse(UUID.randomUUID()), new Timestamp(startFrom), new Timestamp(endAt)).flatMap { pageClazzes =>
+    cService.listPersonalizedMy(page, 10, orderBy, "%" + filter + "%", request.identity.id.get, new Timestamp(startFrom), new Timestamp(endAt)).flatMap { pageClazzes =>
       Future.successful(Ok(Json.toJson(pageClazzes)))
     }.recover {
       case ex: TimeoutException =>
