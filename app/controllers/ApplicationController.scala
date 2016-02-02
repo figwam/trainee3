@@ -1,25 +1,20 @@
 package controllers
 
 import java.sql.Timestamp
-import java.util.{Date, GregorianCalendar, UUID}
+import java.util.GregorianCalendar
 import java.util.concurrent.TimeoutException
-import javax.inject.{Singleton, Inject}
+import javax.inject.{Inject, Singleton}
 
-import com.mohiva.play.silhouette.api.{ Environment, LogoutEvent, Silhouette }
+import com.mohiva.play.silhouette.api.{Environment, Silhouette}
 import com.mohiva.play.silhouette.impl.authenticators.JWTAuthenticator
 import com.mohiva.play.silhouette.impl.providers.SocialProviderRegistry
 import models._
-import models.daos._
-import play.Play
 import play.api.Logger
-import play.api.cache.Cache
 import play.api.i18n.{Messages, MessagesApi}
 import play.api.libs.json.Json
-import scala.concurrent.ExecutionContext.Implicits.global
-import play.api.Play.current
-import scala.concurrent.duration._
 
-import scala.concurrent.{Await, Future}
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
 /**
  * The basic application controller.

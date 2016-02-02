@@ -14,19 +14,24 @@ GET           /                                      com.tuplejump.playYeoman.Ye
 GET           /trainees/me/addresses/:id             controllers.AddressController.retrieveByOwner(id: java.util.UUID)
 PUT           /trainees/me/addresses/:id             controllers.AddressController.updateByOwner(id: java.util.UUID)
 
-
-# open resources
-GET           /user                                  controllers.UserController.user
-GET           /offers                                controllers.OthersController.offers
-GET           /enums                                 controllers.OthersController.enums
+#open resources
+GET           /user                               controllers.UserController.user
+GET           /offers                               controllers.OthersController.offers
+GET           /enums                               controllers.OthersController.enums
 GET           /clazzes                               controllers.OthersController.clazzes(p:Int ?= 0, s:Int ?= 1, f ?= "")
 GET           /clazzesCount                          controllers.OthersController.clazzesCount
+#GET           /clazzes/next                          controllers.ClazzDefinitionController.calculateNextClazzes
+
+#images
+POST          /c/images                             controllers.ImageController.create
+GET           /c/images/:id                         controllers.ImageController.retrieve(id: java.util.UUID)
+DELETE        /c/images/:id                         controllers.ImageController.delete(id: java.util.UUID)
 
 # get ALL (outer join) clazzes with some personalized information
 GET           /clazzes/trainees/me                   controllers.ApplicationController.clazzesPersonalizedAll(p:Int ?= 0, s:Int ?= 1, f ?= "")
 
 # trainee registrations
-GET           /trainees/me/registrationsCount        controllers.RegistrationController.countByTrainee
+GET           /trainees/me/registrationsCount        controllers.RegistrationController.count
 POST          /trainees/me/registrations             controllers.RegistrationController.create
 DELETE        /trainees/me/registrations/:id         controllers.RegistrationController.delete(id: java.util.UUID)
 
