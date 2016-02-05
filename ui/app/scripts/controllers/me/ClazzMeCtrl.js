@@ -75,7 +75,7 @@ app.controller('ClazzMeCtrl', ['$state', '$scope', '$rootScope', '$http', '$temp
   }
 
   $scope.book = function(idClazz) {
-    var body={"idClazz":idClazz};
+    var body={"idClazz":idClazz,"type":"None"};
     $http({
       method: "POST",
       url: "/trainees/me/registrations",

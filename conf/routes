@@ -24,8 +24,8 @@ GET           /clazzesCount                          controllers.OthersControlle
 
 #images
 POST          /c/images                             controllers.ImageController.create
-GET           /c/images/:id                         controllers.ImageController.retrieve(id: java.util.UUID)
-DELETE        /c/images/:id                         controllers.ImageController.delete(id: java.util.UUID)
+GET           /c/images/$id<[^/]+>.jpg              controllers.ImageController.retrieve(id: java.util.UUID)
+DELETE        /c/images/$id<[^/]+>.jpg              controllers.ImageController.delete(id: java.util.UUID)
 
 # get ALL (outer join) clazzes with some personalized information
 GET           /clazzes/trainees/me                   controllers.ApplicationController.clazzesPersonalizedAll(p:Int ?= 0, s:Int ?= 1, f ?= "")
