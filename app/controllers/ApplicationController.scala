@@ -32,32 +32,6 @@ class ApplicationController @Inject()(
   extends Silhouette[User, JWTAuthenticator] {
 
 
-
-
-  def clazzesPersonalizedAll(page: Int, orderBy: Int, filter: String) = SecuredAction.async { implicit request =>
-    cService.listPersonalizedAll(page, 10, orderBy, "%" + filter + "%", request.identity.id.get).flatMap { pageClazzes =>
-      Future.successful(Ok(Json.toJson(pageClazzes)))
-    }.recover {
-      case ex: TimeoutException =>
-        Logger.error("Problem found in clazz list process")
-        InternalServerError(ex.getMessage)
-    }
-  }
-
-
-
-  def clazzesPersonalizedMy(page: Int, orderBy: Int, filter: String, startFrom: Long, endAt:Long) = SecuredAction.async { implicit request =>
-    val d = new GregorianCalendar()
-    d.setTimeInMillis(startFrom)
-    cService.listPersonalizedMy(page, 10, orderBy, "%" + filter + "%", request.identity.id.get, new Timestamp(startFrom), new Timestamp(endAt)).flatMap { pageClazzes =>
-      Future.successful(Ok(Json.toJson(pageClazzes)))
-    }.recover {
-      case ex: TimeoutException =>
-        Logger.error("Problem found in clazz list process")
-        InternalServerError(ex.getMessage)
-    }
-  }
-
   /**
      * Provides the desired template.
    *

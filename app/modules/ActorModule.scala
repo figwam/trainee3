@@ -11,15 +11,12 @@ import workers.DBLogAdmin
 /**
  * Created by alex on 28/09/15.
  */
-class AppModule extends AbstractModule with ScalaModule with AkkaGuiceSupport {
+class ActorModule extends AbstractModule with ScalaModule with AkkaGuiceSupport {
 
   /**
    * Configures the module.
    */
   def configure() {
-    bind[UserService].to[TraineeService]
-    bind[AddressService].to[AddressServiceTraineeImpl]
-    bind[ClazzService].to[ClazzServiceTraineeImpl]
-    bind[DelegableAuthInfoDAO[PasswordInfo]].to[TraineePasswordInfo]
+    bindActor[DBLogAdmin]("DBLogAdmin")
   }
 }

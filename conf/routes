@@ -2,6 +2,18 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
+#   .d8888b.
+#  d88P  Y88b
+#  888    888
+#  888         .d88b.  88888b.d88b.  88888b.d88b.   .d88b.  88888b.
+#  888        d88""88b 888 "888 "88b 888 "888 "88b d88""88b 888 "88b
+#  888    888 888  888 888  888  888 888  888  888 888  888 888  888
+#  Y88b  d88P Y88..88P 888  888  888 888  888  888 Y88..88P 888  888
+#   "Y8888P"   "Y88P"  888  888  888 888  888  888  "Y88P"  888  888
+#
+#
+#
+
 GET           /                                      com.tuplejump.playYeoman.Yeoman.index
 
 # address
@@ -9,41 +21,6 @@ GET           /                                      com.tuplejump.playYeoman.Ye
 #GET           /addresses/:id                        controllers.AddressController.retrieve(id: java.util.UUID)
 #PUT           /addresses/:id                        controllers.AddressController.update(id: java.util.UUID)
 #DELETE        /addresses/:id                        controllers.AddressController.delete(id: java.util.UUID)
-
-# address
-GET           /trainees/me/addresses/:id             controllers.AddressController.retrieveByOwner(id: java.util.UUID)
-PUT           /trainees/me/addresses/:id             controllers.AddressController.updateByOwner(id: java.util.UUID)
-
-#open resources
-GET           /user                               controllers.UserController.user
-GET           /offers                               controllers.OthersController.offers
-GET           /enums                               controllers.OthersController.enums
-GET           /clazzes                               controllers.OthersController.clazzes(p:Int ?= 0, s:Int ?= 1, f ?= "")
-GET           /clazzesCount                          controllers.OthersController.clazzesCount
-#GET           /clazzes/next                          controllers.ClazzDefinitionController.calculateNextClazzes
-
-#images
-POST          /c/images                             controllers.ImageController.create
-GET           /c/images/$id<[^/]+>.jpg              controllers.ImageController.retrieve(id: java.util.UUID)
-DELETE        /c/images/$id<[^/]+>.jpg              controllers.ImageController.delete(id: java.util.UUID)
-
-# get ALL (outer join) clazzes with some personalized information
-GET           /clazzes/trainees/me                   controllers.ApplicationController.clazzesPersonalizedAll(p:Int ?= 0, s:Int ?= 1, f ?= "")
-
-# trainee registrations
-GET           /trainees/me/registrationsCount        controllers.RegistrationController.count
-POST          /trainees/me/registrations             controllers.RegistrationController.create
-DELETE        /trainees/me/registrations/:id         controllers.RegistrationController.delete(id: java.util.UUID)
-
-# trainee
-GET           /trainees/me                           controllers.TraineeController.retrieve
-PUT           /trainees/me                           controllers.TraineeController.update
-DELETE        /trainees/me                           controllers.TraineeController.delete
-
-# get ALL (inner join) clazzes which the trainee is registered to (with some personalized information)
-#1420066800000 = 01.01.2015 00:00:00 LocalTime, see http://currentmillis.com/
-#7258114800000 = 01.01.2200 00:00:00 So pretty in future. What will happen in year 2200 with this app I actually dont care!
-GET          /trainees/me/clazzes                    controllers.ApplicationController.clazzesPersonalizedMy(p:Int ?= 0, s:Int ?= 1, f ?= "", sf:Long ?= 1420066800000L, ea:Long ?= 7258114800000L)
 
 # Authentication
 GET           /signOut                               controllers.UserController.signOut
@@ -65,5 +42,54 @@ GET           /views/me/$template<[^/]+>.html        controllers.ApplicationCont
 # Map static resources from the /public folder to the /assets URL path
 GET           /assets/*file                          controllers.Assets.at(path="/public", file)
 GET           /webjars/*file                         controllers.WebJarAssets.at(file)
+
+#open resources
+GET           /user                                  controllers.UserController.user
+GET           /offers                                controllers.OthersController.offers
+GET           /enums                                 controllers.OthersController.enums
+GET           /clazzes                               controllers.OthersController.clazzes(p:Int ?= 0, s:Int ?= 1, f ?= "")
+GET           /clazzesCount                          controllers.OthersController.clazzesCount
+#GET          /clazzes/next                          controllers.ClazzDefinitionController.calculateNextClazzes
+
+#images
+POST          /c/images                             controllers.ImageController.create
+GET           /c/images/$id<[^/]+>.jpg              controllers.ImageController.retrieve(id: java.util.UUID)
+DELETE        /c/images/$id<[^/]+>.jpg              controllers.ImageController.delete(id: java.util.UUID)
+
+
+#  88888888888              d8b
+#      888                  Y8P
+#      888
+#      888  888d888 8888b.  888 88888b.   .d88b.   .d88b.
+#      888  888P"      "88b 888 888 "88b d8P  Y8b d8P  Y8b
+#      888  888    .d888888 888 888  888 88888888 88888888
+#      888  888    888  888 888 888  888 Y8b.     Y8b.
+#      888  888    "Y888888 888 888  888  "Y8888   "Y8888
+#
+#
+#
+
+# get ALL (outer join) clazzes with some personalized information
+GET           /clazzes/trainees/me                   controllers.ClazzController.clazzesPersonalizedAll(p:Int ?= 0, s:Int ?= 1, f ?= "")
+
+# trainee registrations
+GET           /trainees/me/registrationsCount        controllers.RegistrationController.count
+POST          /trainees/me/registrations             controllers.RegistrationController.create
+DELETE        /trainees/me/registrations/:id         controllers.RegistrationController.delete(id: java.util.UUID)
+
+# trainee
+GET           /trainees/me                           controllers.TraineeController.retrieve
+PUT           /trainees/me                           controllers.TraineeController.update
+DELETE        /trainees/me                           controllers.TraineeController.delete
+
+# get ALL (inner join) clazzes which the trainee is registered to (with some personalized information)
+#1420066800000 = 01.01.2015 00:00:00 LocalTime, see http://currentmillis.com/
+#7258114800000 = 01.01.2200 00:00:00 So pretty in future. What will happen in year 2200 with this app I actually dont care!
+GET          /trainees/me/clazzes                    controllers.ClazzController.clazzesPersonalizedMy(p:Int ?= 0, s:Int ?= 1, f ?= "", sf:Long ?= 1420066800000L, ea:Long ?= 7258114800000L)
+
+# address
+GET           /trainees/me/addresses/:id             controllers.AddressController.retrieveByOwner(id: java.util.UUID)
+PUT           /trainees/me/addresses/:id             controllers.AddressController.updateByOwner(id: java.util.UUID)
+
 
 ->            /                                      yeoman.Routes
