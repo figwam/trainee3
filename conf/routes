@@ -75,7 +75,7 @@ GET           /clazzes/trainees/me                   controllers.ClazzController
 # trainee registrations
 GET           /trainees/me/registrationsCount        controllers.RegistrationController.count
 POST          /trainees/me/registrations             controllers.RegistrationController.create
-DELETE        /trainees/me/registrations/:id         controllers.RegistrationController.delete(id: java.util.UUID)
+DELETE        /trainees/me/registrations/:id         controllers.RegistrationController.deleteOwn(id: java.util.UUID)
 
 # trainee
 GET           /trainees/me                           controllers.TraineeController.retrieve
@@ -88,8 +88,8 @@ DELETE        /trainees/me                           controllers.TraineeControll
 GET          /trainees/me/clazzes                    controllers.ClazzController.clazzesPersonalizedMy(p:Int ?= 0, s:Int ?= 1, f ?= "", sf:Long ?= 1420066800000L, ea:Long ?= 7258114800000L)
 
 # address
-GET           /trainees/me/addresses/:id             controllers.AddressController.retrieveByOwner(id: java.util.UUID)
-PUT           /trainees/me/addresses/:id             controllers.AddressController.updateByOwner(id: java.util.UUID)
+GET           /trainees/me/addresses/:id             controllers.AddressController.retrieveOwn(id: java.util.UUID)
+PUT           /trainees/me/addresses/:id             controllers.AddressController.updateOwn(id: java.util.UUID)
 
 
 ->            /                                      yeoman.Routes
