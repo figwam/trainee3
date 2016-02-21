@@ -18,7 +18,7 @@ GET           /                                      com.tuplejump.playYeoman.Ye
 
 # address
 #POST          /addresses                            controllers.AddressController.create
-#GET           /addresses/:id                        controllers.AddressController.retrieve(id: java.util.UUID)
+GET           /addresses/:id                        controllers.AddressController.retrieve(id: java.util.UUID)
 #PUT           /addresses/:id                        controllers.AddressController.update(id: java.util.UUID)
 #DELETE        /addresses/:id                        controllers.AddressController.delete(id: java.util.UUID)
 
@@ -55,6 +55,12 @@ GET           /clazzesCount                          controllers.OthersControlle
 POST          /c/images                             controllers.ImageController.create
 GET           /c/images/$id<[^/]+>.jpg              controllers.ImageController.retrieve(id: java.util.UUID)
 DELETE        /c/images/$id<[^/]+>.jpg              controllers.ImageController.delete(id: java.util.UUID)
+
+#Studio
+GET           /studios/:id                          controllers.StudioController.retrieve(id: java.util.UUID)
+
+#Partner
+GET           /partners/:id                          controllers.PartnerController.retrieveP(id: java.util.UUID)
 
 
 #  88888888888              d8b
